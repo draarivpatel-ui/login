@@ -1,4 +1,5 @@
 import { signToken } from './token.js';
+import { withSecurityHeaders } from './security-headers.js';
 
 const enc = new TextEncoder();
 const COOKIE = 'login_state';
@@ -96,4 +97,6 @@ Flisk Login provides GitHub-based sign-in for Flisk services.
   return ok('not found', 404, 'text/plain');
 }
 
-export default { fetch: (req, env, ctx) => handle(req, env) };
+// Every response carries the baseline security headers (see security-headers.js). A header a route sets itself, such as the
+// callback's no-referrer, is kept.
+export default { fetch: async (req, env, ctx) => withSecurityHeaders(await handle(req, env)) };
