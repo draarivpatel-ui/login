@@ -56,15 +56,15 @@ export async function handle(req, env, deps = {}) {
   if (url.pathname === "/llms.txt") {
     const content = `# Flisk Login
 
-Flisk Login provides GitHub-based sign-in for Flisk services.
+> Flisk Login provides GitHub-based sign-in for Flisk services.
 
 ## Main Website
-- https://flisk.sh/
+- [Flisk](https://flisk.sh/)
 
 ## Flisk Services
-- https://grow.flisk.si/
-- https://chat.flisk.si/
-- https://learn.flisk.si/
+- [Grow](https://grow.flisk.si/)
+- [Chat](https://chat.flisk.si/)
+- [Learn](https://learn.flisk.si/)
 `;
     return ok(content, 200, "text/plain", "public, max-age=3600");
   }

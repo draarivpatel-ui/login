@@ -129,8 +129,14 @@ describe('sign-in flow', () => {
     expect(response.status).toBe(200);
     expect(response.headers.get("content-type")).toContain("text/plain");
     const body = await response.text();
-    expect(body).toContain("Flisk Login");
-    expect(body.length).toBeGreaterThan(0);
+    const links = [...body.matchAll(/^- \[[^\]]+\]\((https:\/\/[^)\s]+)\)/gm)];
+    expect(links.map((link) => link[1])).toEqual([
+      "https://flisk.sh/",
+      "https://grow.flisk.si/",
+      "https://chat.flisk.si/",
+      "https://learn.flisk.si/",
+    ]);
+    expect(body).toMatch(/^# Flisk Login\n\n> \S/);
     const cache = response.headers.get("cache-control");
     expect(cache).toBeTruthy();
   });
